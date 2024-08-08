@@ -1,4 +1,4 @@
-name: Cao
+name: Test
 on:
   workflow_dispatch:
    inputs:
