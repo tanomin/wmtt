@@ -7,7 +7,7 @@ on:
         required: true
 
 jobs:
-  claim-tomarket:
+  run:
     runs-on: ubuntu-latest
     steps:
       - name: i
@@ -37,8 +37,9 @@ jobs:
           key: ${{ runner.os }}-nextjs-${{ hashFiles('**/pnpm-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
-
-      - run: pnpm i
+    
+      - name: i
+        run: pnpm i
 
       - name: Claim
         run: node get_story.mjs ${{ github.event.inputs.story_id }}
