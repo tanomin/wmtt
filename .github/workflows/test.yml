@@ -1,0 +1,46 @@
+name: Cao
+on:
+  workflow_dispatch:
+   inputs:
+      story_id:
+        description: 'sid'
+        required: true
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: i
+        uses: actions/checkout@v4
+        with:
+          repository: tanomin/cao_baotangtruyen14
+          ref: master
+          token: ${{ secrets.REMOTE_REPO_ACCESS_TOKEN }}
+
+      - name: i
+        uses: pnpm/action-setup@v4
+        with:
+          version: 8
+          run_install: false
+
+      - name: i
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "pnpm"
+
+      - name: i
+        uses: actions/cache@v4
+        with:
+          path: |
+            node_modules
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/pnpm-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
+    
+      - name: i
+        run: pnpm i
+
+      - name: Claim
+        run: node test.mjs
+      
