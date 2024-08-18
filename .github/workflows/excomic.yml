@@ -1,11 +1,11 @@
 name:  Excomic
 on:
   workflow_dispatch: # allow manual run
-  inputs:
-    chapter_id:
-      description: 'id of the chapter to process'
-      required: true
-      default: '1' 
+    inputs:
+      id:
+        description: 'id of the chapter to process'
+        required: true
+        default: '1' 
 
 jobs:
   run:
@@ -14,9 +14,9 @@ jobs:
       - name: i
         uses: actions/checkout@v4
         with:
-        repository: tanomin/excomic
-        ref: master
-        token: ${{ secrets.REMOTE_REPO_ACCESS_TOKEN }}
+          repository: tanomin/excomic
+          ref: master
+          token: ${{ secrets.REMOTE_REPO_ACCESS_TOKEN }}
 
       - name: i
         uses: actions/setup-python@v4
@@ -27,10 +27,10 @@ jobs:
         uses: actions/cache@v3
         with:
           path: |
-          ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
-          restore-keys: |
-          ${{ runner.os }}-pip-
+            ~/.cache/pip
+            key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+            restore-keys: |
+            ${{ runner.os }}-pip-
 
       - name: i
         run: |
@@ -39,5 +39,5 @@ jobs:
 
       - name: Claim
         run: |
-            python cli.py ${{ github.event.inputs.chapter_id }}
+            python cli.py ${{ github.event.inputs.id }}
       
