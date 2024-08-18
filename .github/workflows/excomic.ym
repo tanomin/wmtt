@@ -1,0 +1,43 @@
+name:  Excomic
+on:
+  workflow_dispatch: # allow manual run
+  inputs:
+    chapter_id:
+      description: 'id of the chapter to process'
+      required: true
+      default: '1' 
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: i
+        uses: actions/checkout@v4
+        with:
+        repository: tanomin/excomic
+        ref: master
+        token: ${{ secrets.REMOTE_REPO_ACCESS_TOKEN }}
+
+      - name: i
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'  # Thay đổi phiên bản Python theo nhu cầu
+
+      - name: i
+        uses: actions/cache@v3
+        with:
+          path: |
+          ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+          ${{ runner.os }}-pip-
+
+      - name: i
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Claim
+        run: |
+            python cli.py ${{ github.event.inputs.chapter_id }}
+      
