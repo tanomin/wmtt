@@ -1,4 +1,4 @@
-name: Cex
+name: Cron excomic
 on:
   workflow_dispatch: # allow manual run
   schedule:
