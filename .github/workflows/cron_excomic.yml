@@ -1,0 +1,39 @@
+name: Cex
+on:
+  workflow_dispatch: # allow manual run
+  schedule:
+    - cron: '*/5 * * * *' # 5'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: tanomin/xtool
+          ref: master
+          token: ${{ secrets.REMOTE_REPO_ACCESS_TOKEN }}
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 8
+          run_install: false
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "pnpm"
+
+      - name: Cache pnpm dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            node_modules
+          key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}-
+
+      - run: pnpm i
+      
+      - name: Claim
+        run: node cron.mjs
