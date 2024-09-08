@@ -1,43 +1,41 @@
-name:  Excomic
+name: upload mtt
 on:
-  workflow_dispatch: # allow manual run
-    inputs:
-      id:
-        description: 'id of the chapter to process'
-        required: true
-        default: '1' 
+  workflow_dispatch:
+   inputs:
+      num:
+        description: 'Offset of accounts to claim'
+        default: '0'
 
 jobs:
-  run:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - name: i
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
-          repository: tanomin/excomic
+          repository: tanomin/xtool
           ref: master
           token: ${{ secrets.REMOTE_REPO_ACCESS_TOKEN }}
 
-      - name: i
-        uses: actions/setup-python@v4
+      - uses: pnpm/action-setup@v4
         with:
-          python-version: '3.12'  # Thay đổi phiên bản Python theo nhu cầu
+          version: 8
+          run_install: false
 
-      - name: i
-        uses: actions/cache@v3
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "pnpm"
+
+      - name: Cache pnpm dependencies
+        uses: actions/cache@v4
         with:
           path: |
-            ~/.cache/pip
-            key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
-            restore-keys: |
-            ${{ runner.os }}-pip-
+            node_modules
+          key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}-
 
-      - name: i
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-
-      - name: Claim
-        run: |
-            python cli.py ${{ github.event.inputs.id }}
+      - run: pnpm i
       
+      - name: Claim
+        run: node main.mjs ${{ github.event.inputs.num }}
