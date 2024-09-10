@@ -2,7 +2,7 @@ name: Cron excomic
 on:
   workflow_dispatch: # allow manual run
   schedule:
-    - cron: '*/3 * * * *' # 3'
+    - cron: '*/2 * * * *' # 3'
 
 jobs:
   build:
