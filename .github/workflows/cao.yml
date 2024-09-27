@@ -12,14 +12,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          repository: tanomin/xtool
+          repository: tanomin/cao_baotangtruyen
           ref: master
           token: ${{ secrets.REMOTE_REPO_ACCESS_TOKEN }}
 
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.x'  # Thay thế '3.x' bằng phiên bản Python bạn cần
+          python-version: '3.12'  # Thay thế '3.x' bằng phiên bản Python bạn cần
 
       - name: Install dependencies
         run: |
