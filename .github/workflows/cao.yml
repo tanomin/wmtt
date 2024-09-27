@@ -1,11 +1,11 @@
-name: upload mtt
+name: cao
 on:
   workflow_dispatch:
    inputs:
       num:
         description: 'Offset of accounts to claim'
         default: '0'
-        
+
 jobs:
   build:
     runs-on: ubuntu-latest
