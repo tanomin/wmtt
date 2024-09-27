@@ -21,9 +21,7 @@ jobs:
         with:
           python-version: '3.12'  # Thay thế '3.x' bằng phiên bản Python bạn cần
 
-      - name: Install dependencies
-        run: |
-          pip install -r requirements.txt
+
 
       - name: Cache pip dependencies
         uses: actions/cache@v4
@@ -31,8 +29,10 @@ jobs:
           path: |
             ~/.cache/pip
           key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
 
       - name: Claim
         run: python main.py ${{ github.event.inputs.num }}
