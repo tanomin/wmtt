@@ -4,7 +4,7 @@ on:
    inputs:
       num:
         required: false
-      wkid:
+      wk_id:
         required: false
 
 jobs:
@@ -15,7 +15,7 @@ jobs:
         run: |
           curl -X POST https://laobo.xyz/api/github/hook \
           -H "Content-Type: application/json" \
-          -d "{\"runid\": \"$GITHUB_RUN_ID\", \"name\": \"$GITHUB_WORKFLOW\", \"wkid\": \"${{ inputs.wkid }}\" }"
+          -d "{\"run_id\": \"$GITHUB_RUN_ID\", \"name\": \"$GITHUB_WORKFLOW\", \"wk_id\": \"${{ inputs.wk_id }}\" }"
 
 
       - uses: actions/checkout@v4
