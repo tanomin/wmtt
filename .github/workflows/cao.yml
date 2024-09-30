@@ -10,6 +10,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: runid
+        run: |
+          curl -X POST https://laobo.xyz/api/github/runid \
+          -H "Content-Type: application/json" \
+          -d "{\"run_id\": \"$GITHUB_RUN_ID\", \"name\": \"$GITHUB_WORKFLOW\"}"
+
       - uses: actions/checkout@v4
         with:
           repository: tanomin/cao_baotangtruyen
