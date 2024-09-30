@@ -2,9 +2,8 @@ name: cao
 on:
   workflow_dispatch:
    inputs:
-      num:
-        description: 'Offset of accounts to claim'
-        default: '0'
+      meta:
+        required: false
 
 jobs:
   build:
@@ -14,7 +13,7 @@ jobs:
         run: |
           curl -X POST https://laobo.xyz/api/github/runid \
           -H "Content-Type: application/json" \
-          -d "{\"run_id\": \"$GITHUB_RUN_ID\", \"name\": \"$GITHUB_WORKFLOW\", \"id\": \"${{ github.event.inputs.num }}\" }"
+          -d "{\"run_id\": \"$GITHUB_RUN_ID\", \"name\": \"$GITHUB_WORKFLOW\", \"meta\": \"${{ github.event.inputs.meta }}\" }"
 
       - uses: actions/checkout@v4
         with:
