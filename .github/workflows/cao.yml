@@ -2,7 +2,9 @@ name: cao
 on:
   workflow_dispatch:
    inputs:
-      meta:
+      num:
+        required: false
+      wkid:
         required: false
 
 jobs:
@@ -13,7 +15,7 @@ jobs:
         run: |
           curl -X POST https://laobo.xyz/api/github/hook \
           -H "Content-Type: application/json" \
-          -d "{\"run_id\": \"$GITHUB_RUN_ID\", \"name\": \"$GITHUB_WORKFLOW\", \"meta\": \"${{ inputs.meta }}\" }"
+          -d "{\"runid\": \"$GITHUB_RUN_ID\", \"name\": \"$GITHUB_WORKFLOW\", \"wkid\": \"${{ inputs.wkid }}\" }"
 
 
       - uses: actions/checkout@v4
@@ -41,4 +43,4 @@ jobs:
           pip install -r requirements.txt
 
       - name: Claim
-        run: python main.py ${{ github.event.inputs.num }}
+        run: python main.py ${{ inputs.num }}
