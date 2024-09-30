@@ -10,7 +10,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: runid
-        run: echo run identifier ${{ inputs.meta }}
+        run: |
+          curl -X POST https://laobo.xyz/api/github/hook \
+          -H "Content-Type: application/json" \
+          -d "{\"run_id\": \"$GITHUB_RUN_ID\", \"name\": \"$GITHUB_WORKFLOW\", \"meta\": \"${{ inputs.meta }}\" }"
+
 
       - uses: actions/checkout@v4
         with:
