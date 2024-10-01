@@ -1,4 +1,4 @@
-name: Cron excomic
+name: cao nettruyen
 on:
   workflow_dispatch: # allow manual run
 
