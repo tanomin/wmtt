@@ -1,0 +1,45 @@
+name: Cron excomic
+on:
+  workflow_dispatch: # allow manual run
+    inputs:
+        weburl:
+            description: 'Offset of accounts to claim'
+            default: '0'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: i
+        uses: actions/checkout@v4
+        with:
+          repository: tanomin/hitcache
+          ref: master
+          token: ${{ secrets.REMOTE_REPO_ACCESS_TOKEN }}
+
+      - name: i
+        uses: pnpm/action-setup@v4
+        with:
+          version: 8
+          run_install: false
+
+            
+      - name: i
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "pnpm"
+
+      - name: i
+        uses: actions/cache@v4
+        with:
+          path: |
+            node_modules
+          key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}-
+      
+      - name: i
+        run: pnpm i
+      
+      - name: Claim
+        run: node main.js ${{ inputs.weburl }}
