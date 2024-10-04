@@ -1,4 +1,4 @@
-name: Cron excomic
+name: Hit CF Cache
 on:
   workflow_dispatch: # allow manual run
     inputs:
@@ -42,4 +42,4 @@ jobs:
         run: pnpm i
       
       - name: Claim
-        run: node main.js ${{ inputs.weburl }}
+        run: node main.mjs ${{ inputs.weburl }}
