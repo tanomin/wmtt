@@ -10,7 +10,7 @@ jobs:
       - name: i
         uses: actions/checkout@v4
         with:
-          repository: tanomin/cao_baotangtruyen14
+          repository: tanomin/xtool
           ref: master
           token: ${{ secrets.REMOTE_REPO_ACCESS_TOKEN }}
 
