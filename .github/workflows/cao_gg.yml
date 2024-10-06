@@ -1,4 +1,4 @@
-name: Test
+name: Cao gg
 on:
   workflow_dispatch:
     inputs:
@@ -41,5 +41,5 @@ jobs:
         run: pnpm i
 
       - name: Claim
-        run: node cao_gg.mjs
+        run: node cao_gg.mjs ${{ inputs.page }}
       
